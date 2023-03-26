@@ -1,0 +1,29 @@
+runtime: nodejs14
+env: standard
+instance_class: F1
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+
+handlers:
+- url: /
+  script: home.app
+
+- url: /index\.html
+  script: home.app
+
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /(.*\.(gif|png|jpg))$
+  static_files: static/\1
+  upload: static/.*\.(gif|png|jpg)$
+
+- url: /admin/.*
+  script: admin.app
+  login: admin
+
+- url: /.*
+  script: not_found.app
